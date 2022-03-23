@@ -5,8 +5,10 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
+import java.util.ArrayList;
+
 public class Headless {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         System.setProperty("webdriver.chrome.driver","C:\\Users\\jagats\\Downloads\\chromedriver.exe");
         WebDriver driver;
         ChromeOptions options = new ChromeOptions();
@@ -35,10 +37,12 @@ public class Headless {
         String str1 = driver.getTitle();
         String parentWindow = driver.getWindowHandle();
         driver.findElement(By.xpath("//a[@href='https://phptravels.org/']")).click();
-        String newWindow = driver.getWindowHandle();
+        /*String newWindow = driver.getWindowHandle();
         driver.switchTo().window(newWindow);
-        String str2 = driver.getTitle();
-        System.out.println(str1+str2);
+        String str2 = driver.getTitle();*/
+        ArrayList<String> tabs=new ArrayList<>(driver.getWindowHandles());
+        String str2=(driver.switchTo().window(tabs.get(1))).getTitle();
+        String title1=(driver.switchTo().window(tabs.get(0))).getTitle();
         if(str1.equals(str2)){
             System.out.println("PASS");
         }
@@ -48,13 +52,15 @@ public class Headless {
         driver.switchTo().window(parentWindow);
     }
 
-    public static void pricingAndBack(WebDriver driver){
-        String parentWindow = driver.getWindowHandle();
+    public static void pricingAndBack(WebDriver driver) throws InterruptedException {
         driver.findElement(By.xpath("//a[text()='Pricing']")).click();
         String str = driver.getCurrentUrl();
         System.out.println(str);
+        Thread.sleep(3000);
         driver.navigate().back();
+        Thread.sleep(3000);
         driver.navigate().refresh();
-        driver.switchTo().window(parentWindow);
+        Thread.sleep(3000);
+        driver.quit();
     }
 }
