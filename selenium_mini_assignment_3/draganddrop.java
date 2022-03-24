@@ -9,7 +9,7 @@ import org.openqa.selenium.interactions.Actions;
 import java.util.concurrent.TimeUnit;
 
 
-public class draganddrop {
+public class Draganddrop {
     public static void main(String[] args) {
         System.setProperty("webdriver.chrome.driver","C:\\Users\\jagats\\Downloads\\chromedriver.exe");
         WebDriver driver = new ChromeDriver();
